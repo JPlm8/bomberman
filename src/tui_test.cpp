@@ -1,26 +1,39 @@
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
+#include <ftxui/screen/color.hpp>
 #include <iostream>
 #include <string>
+#include <thread>
 
 using namespace std;
 using namespace ftxui;
 
-
-int main ()
+int main(int argc, char const *argv[])
 {
-    const string texto = "Hola Mundo";
-    Element textElement = text(texto);
-    
-    Element dibujo = hbox(textElement | border);
+    int fotograma = 0;
+    string reset;
+    while (true)
+    {
+        fotograma++;
 
-    Dimensions Alto = Dimension::Fixed(10);
-    Dimensions Ancho = Dimension::Fixed(10);
+        Element personaje = spinner(17, fotograma);
+        Decorator colorFondo = bgcolor(Color::DarkBlue);
+        Decorator colorTexto = color(Color::White);
+        Element dibujo = border({hbox(personaje) | colorFondo | colorTexto});
 
-    Screen pantalla = Screen::Create(Ancho,Alto);
+        Dimensions Alto = Dimension::Fixed(10);
+        Dimensions Ancho = Dimension::Full();
 
-    Render(pantalla,dibujo);
-    pantalla.Print();
-    cout<<endl;
+        Screen pantalla = Screen::Create(Ancho, Alto);
+
+        Render(pantalla, dibujo);
+
+        pantalla.Print();
+        reset = pantalla.ResetPosition();
+        cout << reset;
+
+        this_thread::sleep_for(0.1s);
+    }
+
     return 0;
 }
