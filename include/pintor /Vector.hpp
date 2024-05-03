@@ -1,12 +1,12 @@
 #pragma once
 
+class Vector
+{
+private:
+    int posX;
+    int posY;
 
-
-class Vector{
-    private:
-        int posX;
-        int posY;
-    public:
-            Vector() {}
-            ~Vector() {}
+public:
+    Vector() {}
+    ~Vector() {}
 }

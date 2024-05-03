@@ -11,25 +11,19 @@
 using namespace std;
 using namespace ftxui;
 
-
 int main(int argc, char const *argv[])
 {
-    const string texto = "Hola mundo";
-    Element textElement = text(texto);
     list<string> textos;
     fstream imagen;
     imagen.open("./assets/imagen.txt");
 
-    Element dibujo = hbox(textElement | border);
     string linea;
-    while (getline(imagen,linea))
+    while (getline(imagen, linea))
     {
         textos.push_back(linea);
     }
     imagen.close();
 
-    Dimensions Alto = Dimension::Fixed(10);
-    Dimensions Ancho = Dimension::Fixed(10);
     int fotograma = 0;
 
     string reset;
@@ -39,21 +33,15 @@ int main(int argc, char const *argv[])
     {
         fotograma++;
 
-    Screen pantalla = Screen::Create(Ancho,Alto);
         int r = std::experimental::randint(0, 255);
         int g = std::experimental::randint(0, 255);
         int b = std::experimental::randint(0, 255);
 
-    Render(pantalla,dibujo);
         Element personaje = spinner(21, fotograma);
-        Decorator colorFondo = bgcolor(Color::RGB(r,g,b));
-        Decorator colorTexto = color(Color::RGB(b,r,g));
-        Element dibujo = border({
-            hbox(personaje) 
-        }) | colorFondo | colorTexto;
+        Decorator colorFondo = bgcolor(Color::RGB(r, g, b));
+        Decorator colorTexto = color(Color::RGB(b, g, r));
+        Element dibujo = border({hbox(personaje)}) | colorFondo | colorTexto;
 
-    pantalla.Print();
-    cout<<endl;
         Dimensions Alto = Dimension::Full();
         Dimensions Ancho = Dimension::Full();
 
@@ -78,7 +66,6 @@ int main(int argc, char const *argv[])
         cout << reset;
         this_thread::sleep_for(0.1s);
     }
-
 
     return 0;
 }
